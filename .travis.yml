@@ -36,6 +36,8 @@ install:
   - export ANDROID_NDK_r10e="`pwd`/_ci/android-ndk-r10e"
   - export ANDROID_NDK_r11c="`pwd`/_ci/android-ndk-r11c"
 
+  - echo 2 > /proc/sys/kernel/randomize_va_space
+
 script:
   - >
     python3 "${POLLY_SOURCE_DIR}/bin/build.py"
