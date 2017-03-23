@@ -11,18 +11,6 @@ sudo:
 dist:
   - trusty
 
-# Install packages differs for container-based infrastructure
-# * https://docs.travis-ci.com/user/migrating-from-legacy/#How-do-I-install-APT-sources-and-packages%3F
-# * http://stackoverflow.com/a/30925448/2288008
-addons:
-  apt:
-    packages:
-      - python3
-
-      # python3-pip package is not available, use 'easy_install3':
-      # * https://github.com/travis-ci/apt-package-whitelist/issues/768
-      - python3-setuptools # easy_install3
-
 matrix:
   include:
     # Linux {
@@ -72,10 +60,7 @@ install:
   # Install Python 3
   - if [[ "`uname`" == "Darwin" ]]; then travis_retry brew install python3; fi
 
-  # Install Python package 'requests'
-  # 'easy_install3' is not installed by 'brew install python3' on OS X 10.9 Maverick
-  - if [[ "`uname`" == "Darwin" ]]; then pip3 install requests; fi
-  - if [[ "`uname`" == "Linux" ]]; then travis_retry easy_install3 --user requests==2.10.0; fi
+  - pip3 install --user requests
 
   # Install dependencies (CMake, Android NDK)
   - POLLY_SOURCE_DIR="`pwd`"
